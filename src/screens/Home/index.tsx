@@ -1,4 +1,7 @@
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
+
+import Atendee from "../../components/Atendee";
+
 import { styles } from "./styles";
 
 export default function Home() {
@@ -21,6 +24,10 @@ export default function Home() {
           <Text style={styles.buttonText}>+</Text>
         </TouchableOpacity>
       </View>
+
+      <Atendee />
+      <Atendee />
+      <Atendee />
     </View>
   );
 }
