@@ -1,12 +1,35 @@
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  FlatList,
+} from "react-native";
 
 import Atendee from "../../components/Atendee";
 
 import { styles } from "./styles";
 
 export default function Home() {
+  const atendees = [
+    "Allan",
+    "Daniele",
+    "Krüger",
+    "Seghetto",
+    "John",
+    "Mary",
+    "Joseph",
+    "Harry",
+    "Ron",
+    "Lilian",
+  ];
+
   function handleAddAtendee() {
     console.log("You clicked the button");
+  }
+
+  function handleRemoveAtendee(name: string) {
+    console.log(`You removed ${name} from the list.`);
   }
 
   return (
@@ -25,9 +48,23 @@ export default function Home() {
         </TouchableOpacity>
       </View>
 
-      <Atendee name="Allan Krüger" />
-      <Atendee name="Daniele Seghetto" />
-      <Atendee name="Allan Krüger" />
+      <FlatList
+        data={atendees}
+        keyExtractor={(item) => item}
+        renderItem={({ item }) => (
+          <Atendee
+            key={item}
+            name={item}
+            onRemove={() => handleRemoveAtendee(item)}
+          />
+        )}
+        showsVerticalScrollIndicator={false}
+        ListEmptyComponent={() => (
+          <Text style={styles.emptyListText}>
+            There are no atendees in the list.
+          </Text>
+        )}
+      />
     </View>
   );
 }
