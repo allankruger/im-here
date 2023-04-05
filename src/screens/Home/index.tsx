@@ -4,6 +4,7 @@ import {
   TextInput,
   TouchableOpacity,
   FlatList,
+  Alert,
 } from "react-native";
 
 import Atendee from "../../components/Atendee";
@@ -25,11 +26,29 @@ export default function Home() {
   ];
 
   function handleAddAtendee() {
-    console.log("You clicked the button");
+    if (atendees.includes("Allan")) {
+      return Alert.alert(
+        "Atendee already exists.",
+        "There is an atendee registered with this name already."
+      );
+    }
   }
 
   function handleRemoveAtendee(name: string) {
-    console.log(`You removed ${name} from the list.`);
+    return Alert.alert(
+      "Remove",
+      `Are you sure that you want to remove ${name}?`,
+      [
+        {
+          text: "Yes",
+          onPress: () => Alert.alert("Deleted successfully."),
+        },
+        {
+          text: "No",
+          style: "cancel",
+        },
+      ]
+    );
   }
 
   return (
