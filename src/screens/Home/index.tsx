@@ -10,45 +10,40 @@ import {
 import Atendee from "../../components/Atendee";
 
 import { styles } from "./styles";
+import { useState } from "react";
 
 export default function Home() {
-  const atendees = [
-    "Allan",
-    "Daniele",
-    "Krüger",
-    "Seghetto",
-    "John",
-    "Mary",
-    "Joseph",
-    "Harry",
-    "Ron",
-    "Lilian",
-  ];
+  const [atendees, setAtendees] = useState<string[]>([]);
+  const [atendeeName, setAtendeeName] = useState("");
 
   function handleAddAtendee() {
-    if (atendees.includes("Allan")) {
+    if (atendees.includes(atendeeName)) {
       return Alert.alert(
         "Atendee already exists.",
         "There is an atendee registered with this name already."
       );
     }
+
+    setAtendees((prevState) => [...prevState, atendeeName]);
+    setAtendeeName("");
   }
 
   function handleRemoveAtendee(name: string) {
-    return Alert.alert(
-      "Remove",
-      `Are you sure that you want to remove ${name}?`,
-      [
-        {
-          text: "Yes",
-          onPress: () => Alert.alert("Deleted successfully."),
-        },
-        {
-          text: "No",
-          style: "cancel",
-        },
-      ]
-    );
+    Alert.alert("Remove", `Are you sure that you want to remove ${name}?`, [
+      {
+        text: "Yes",
+        onPress: () => (
+          setAtendees((prevState) =>
+            prevState.filter((atendee) => atendee != name)
+          ),
+          Alert.alert("Success", `${name} was successfully removed.`)
+        ),
+      },
+      {
+        text: "No",
+        style: "cancel",
+      },
+    ]);
   }
 
   return (
@@ -61,6 +56,8 @@ export default function Home() {
           style={styles.input}
           placeholder="Atendee name"
           placeholderTextColor={"#6b6b6b"}
+          onChangeText={(text) => setAtendeeName(text)}
+          value={atendeeName}
         />
         <TouchableOpacity style={styles.button} onPress={handleAddAtendee}>
           <Text style={styles.buttonText}>+</Text>
